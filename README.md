@@ -2,9 +2,13 @@
 
 Clone the project: 
 
-### `git clone: https://github.com/MalikHezretov/differentWebApp.git`
+### `git clone https://github.com/MalikHezretov/differentWebApp.git`
 
-Then cd differentWebApp folder and you need to install dependencies by running: 
+Go to project folder:
+
+### `cd differentWebApp` 
+
+Then you need to install dependencies by running: 
 
 ### `npm install`
 
