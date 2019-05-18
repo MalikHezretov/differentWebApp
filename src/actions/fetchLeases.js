@@ -14,6 +14,7 @@ function fetchLeases() {
         fetch('https://hiring-task-api.herokuapp.com/v1/leases')
         .then(res => res.json())
         .then(res => {
+            console.log('LEASES', res)
             dispatch(fetchProductsSuccess(res));
         })
         .catch(error => {

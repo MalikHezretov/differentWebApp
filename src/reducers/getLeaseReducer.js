@@ -6,7 +6,7 @@ import {
 
 const initialState = {
     pending: false,
-    item: null,
+    item: {},
     error: null
 }
 

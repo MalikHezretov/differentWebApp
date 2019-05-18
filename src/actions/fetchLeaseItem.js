@@ -14,6 +14,7 @@ function fetchLeaseItem(id) {
         fetch('https://hiring-task-api.herokuapp.com/v1/leases/:'+id)
         .then(res => res.json())
         .then(res => {
+            // console.log('SELECTED_LEASE', res);
             dispatch(fetchItemSuccess(res));
         })
         .catch(error => {

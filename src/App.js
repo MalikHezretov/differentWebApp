@@ -1,93 +1,30 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import fetchLeases from './actions/fetchLeases';
-import fetchLeaseItem from './actions/fetchLeaseItem';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import Home from './components/Home';
+import LeaseItem from './components/LeaseItem';
+import {createStore, applyMiddleware} from 'redux';
+import rootReducer from './reducers/rootReducer';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import props from 'prop-types';
+
+let store = createStore(rootReducer, applyMiddleware(thunk))
 
 class App extends Component {
 
-  componentDidMount() {
-    const {fetchLeases} = this.props;
-    fetchLeases();
-  }
-
-  // renderSelectedItem = () => {
-  //   if(this.props.leaseDetails.item != null){
-  //     return(
-  //       <div>
-  //       <ul>
-  //         {this.props.leaseDetails.item.map(lease =>(
-  //           <li>
-  //             {lease.id}
-  //             {lease.start_date}
-  //             {lease.end_date}
-  //             {lease.rent}
-  //             {lease.frequency}
-  //             {lease.payment_day}
-  //           </li>
-  //         ))}
-  //       </ul>
-  //       </div>
-  //     )
-  //   }
-
-  // }
-
   render(){
-
-    if(this.props.items.pending){
-      return(
-        <div>
-            Fetching data...
-        </div>
-      )
-    }
-
     return(
-      <div>
-          <ul>
-            {this.props.items.products.map(item => (
-              <li onClick={() =>  {
-                                    this.props.fetchLeaseItem(item.id);
-                                    if(this.props.leaseDetails.item != null){
-                                      console.log('DETAILS', this.props.leaseDetails)
-                                      alert(this.props.leaseDetails.item + 'have been added!');
-                                    }
-                                  }
-                          } 
-              key={item.id}>
-                {item.tenant}
-              </li>
-            ))}
-          </ul>       
-      </div>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/"  component={Home} exact />
+            <Route path="/leaseItem" render={(routeProps) => (<LeaseItem {...routeProps} {...props} />)}/>
+          </Switch>
+        </BrowserRouter>
+      </Provider>
     );
-
   }
 
 }
 
-function mapStateToProps(state){
-  return{
-      items: state.leasesReducer,
-      leaseDetails: state.getLeaseReducer
-  }
-}
-
-const mapDispatchToProps = (dispatch) =>
-    bindActionCreators(
-        {
-          fetchLeases,
-          fetchLeaseItem
-        },
-        dispatch
-    );
-
-App.propTypes = {
-  fetchLeases: PropTypes.func,
-  fetchLeaseItem: PropTypes.func,
-  items: PropTypes.object
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
