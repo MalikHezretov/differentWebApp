@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class LeaseItem extends Component {
 
     render(){
-        if(this.props.leaseDetails.item == {}){
+        if(this.props.leaseDetails.item == null){
             return(
                 <div>
                     <p>FETCHING...</p>
